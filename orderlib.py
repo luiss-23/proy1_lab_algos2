@@ -8,6 +8,7 @@ Autores: Luis Carlos Blanco, 17-10066
 
 Ultima modificacion: 17/02/2020
 """
+import random
 import statistics, math 
 #Algoritmo de ordenamiento InsertionSort
 #Arreglo a: Arreglo a ordenar
@@ -28,7 +29,7 @@ def insertion_sort_index(a:[int],p,r:int) -> [int]:
 def mergesort(t:[int]) -> [int]:
 
 	if len(t) <= 32:
-		insertion_sort_index(t,0,len(t)-1)
+		insertion_sort_index(t,0,len(t))
 	else:
 		o = len(t) // 2
 		p = o + 1
@@ -436,3 +437,8 @@ def merge_it(a:list,start,mid,end:int) -> list:
               
     return a
 
+t = int(input('Ingrese el tamaño: '))
+a = [random.randint(0,1000) for i in range(0,t)]
+print(a)
+mergesort(a)
+print(a)
