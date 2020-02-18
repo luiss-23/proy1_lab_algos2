@@ -4,11 +4,10 @@ orderlib,py
 Descripcion: Libreria de algoritmos de ordenamiento 
 
 Autores: Luis Carlos Blanco, 17-10066
-         Gabriel Chaurio, 17-10164
+         Gabriel Chaurio, 17-10126
 
-Ultima modificacion: 17/02/2020
+Ultima modificacion: 18/02/2020
 """
-import random
 import statistics, math 
 #Algoritmo de ordenamiento InsertionSort
 #Arreglo a: Arreglo a ordenar
@@ -436,9 +435,3 @@ def merge_it(a:list,start,mid,end:int) -> list:
         ind += 1   
               
     return a
-
-t = int(input('Ingrese el tamaño: '))
-a = [random.randint(0,1000) for i in range(0,t)]
-print(a)
-mergesort(a)
-print(a)
