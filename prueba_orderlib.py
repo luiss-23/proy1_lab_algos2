@@ -1,13 +1,13 @@
 """
 orderlib.py
 
-Autores: Luis Carlos Blanco, 17-10066
-         Gabriel Chaurio, 17-10164
-
 Descripcion: Este programa buscara el timepo promedio de ejecucion de los algoritmos 
 de ordenamiento implementados en orderlib.py
 
-Ultima modificacion: 17/02/2020
+Autores: Luis Carlos Blanco, 17-10066
+         Gabriel Chaurio, 17-10126
+
+Ultima modificacion: 18/02/2020
 """
 import random, argparse, time, matplotlib, statistics, sys
 from orderlib import *
