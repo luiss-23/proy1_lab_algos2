@@ -1,6 +1,14 @@
-import random
+"""
+orderlib,py
+
+Descripcion: Libreria de algoritmos de ordenamiento 
+
+Autores: Luis Carlos Blanco, 17-10066
+         Gabriel Chaurio, 17-10164
+
+Ultima modificacion: 17/02/2020
+"""
 import statistics, math 
-import sys
 #Algoritmo de ordenamiento InsertionSort
 #Arreglo a: Arreglo a ordenar
 #p,r: casilla inicial y final respectivamente
@@ -8,7 +16,7 @@ def insertion_sort_index(a:[int],p,r:int) -> [int]:
 	for j in range(p+1, r):
 		key = a[j]
 		i = j - 1
-		while i >= 0 and a[i] >= key:
+		while (i >= 0 and a[i] >= key):
 			a[i + 1] = a[i]
 			i = i - 1
 		a[i + 1] = key
@@ -253,9 +261,178 @@ def max_heapify(a:[int],i,n:int) -> [int]:
 
 	return a
 
+#Algoritmo de ordenamiento para quicksort with 3 way partitioning 
+#a: arreglo a ordenar 
+#l: casilla inicial del arreglo a ordenar
+#r: casilla final del arreglo a ordenar
+def quicksort_w_3_way_partitioning(a:[int],l,r:int) -> [int]:
 
-t = int(input('ingrese el numero de elementos: '))
-c = [random.randint(0,20) for i in range(0,t)]
-print(c)
-introsort(c,0,t)
-print(c)
+	if r - l <= 32:
+		insertion_sort_index(a,l,r)
+
+	i, j, p, q = l-1, r, l-1, r
+	v = a[r]
+
+	if r <= l:
+		return
+
+	while True:
+		i += 1
+		while(a[i] < v):
+			i += 1
+
+		j -= 1
+		while(v < a[j]):
+			if (j == l):
+				break
+			j -= 1
+
+		if (i >= j):
+			break
+
+		a[i], a[j] = a[j], a[i]
+
+		if a[i] == v:
+			p += 1
+			a[p], a[i] = a[i], a[p]
+		if v == a[j]:
+			q -= 1 
+			a[j], a[q]	= a[q], a[j]
+
+
+	a[i], a[r] = a[r], a[i]
+	j = i -1 
+	i = i + 1
+
+	for k in range(l,p):
+		a[k], a[j] = a[j], a[k]
+		j = j - 1
+
+	k = r - 1
+	while (k > q):
+		a[i], a[k] = a[k], a[i]
+		k -= 1
+		i += 1
+
+	quicksort_w_3_way_partitioning(a,l,j)
+	quicksort_w_3_way_partitioning(a,i,r)
+
+	return a
+
+#Algoritmo de ordenamiento Dual pivot quicksort
+#a: arreglo a ordenar 
+#l: casilla inicial del arreglo a ordenar
+#r: casilla final del arreglo a ordenar
+def dual_pivot_quicksort(a:list,left,right:int) -> list:
+	if(right-left <= 32):
+		insertion_sort_index(a,left,right+1)
+	else:
+		if(a[left] > a[right]):
+			p , q = a[right] , a[left]
+		else:
+			p , q = a[left] , a[right]
+		l = left + 1
+		g = right - 1
+		k = l
+		while(k <= g):
+			if(a[k] < p):
+				a[k] , a[l] = a[l] , a[k]
+				l += 1
+			else:
+				if(a[k] >= q):
+					while(a[g] > q and k < g):
+						g -= 1
+					if(a[g] >= p):
+						a[k] , a[g] = a[g] , a[k]
+					else:
+						a[k] , a[g] = a[g] , a[k]
+						a[k] , a[l] = a[l] , a[k]
+						l += 1
+					g -= 1
+			k += 1
+		l -= 1
+		g += 1
+		a[left] = a[l]
+		a[l] = p
+		a[right] = a[g]
+		a[g] = q
+		dual_pivot_quicksort(a,left,l-1)
+		dual_pivot_quicksort(a,l+1,g-1)
+		dual_pivot_quicksort(a,g+1,right)
+
+	return a
+
+#Algoritmo de ordenamiento TimSort
+#a: arreglo a ordenar
+def timsort(a:list) -> list:
+	minrun = 32
+
+	n = len(a)
+
+	for i in range(0,n,minrun):
+		end = min(i+minrun-1,n-1)
+		a = InsSort(a,i,end)
+
+	curr_size = minrun
+	while(curr_size < n):    
+		for i in range(0,n,curr_size*2):
+			mid = min(n-1,i+curr_size-1)
+			end = min(n-1,mid+curr_size)
+			a = merge_it(a,i,mid,end)
+		curr_size *= 2
+
+	return a
+	
+#Algoritmo de ordenaiento InsertionSort usado pot TimSort
+#a: arreglo a ordenar 
+#start: casilla inicial del arreglo
+#end: casilla final del arreglo
+def InsSort(a,start,end):    
+    for i in range(start+1,end+1):
+        elem = a[i]
+        j = i-1
+        while j>=start and elem<a[j]:
+            a[j+1] = a[j]
+            j -= 1
+        a[j+1] = elem
+
+    return a
+
+#Algoritmo merge usado en timsort
+#start: casilla inicial del arreglo
+#mid: casilla encontrada en la mitad del arreglo
+#end: casilla final del arreglo
+def merge_it(a:list,start,mid,end:int) -> list:
+
+    if(mid == end):
+        return a
+
+    first = a[start:mid+1]
+    last = a[mid+1:end+1]
+    len1 = mid - start + 1
+    len2 = end - mid
+    ind1 = 0
+    ind2 = 0
+    ind  = start
+     
+    while(ind1 < len1 and ind2 < len2):
+        if(first[ind1] < last[ind2]):
+            a[ind] = first[ind1]
+            ind1 += 1
+        else:
+            a[ind] = last[ind2]
+            ind2 += 1
+        ind += 1
+     
+    while(ind1 < len1):
+        a[ind] = first[ind1]
+        ind1 += 1
+        ind += 1
+              
+    while(ind2 < len2):
+        a[ind] = last[ind2]
+        ind2 += 1
+        ind += 1   
+              
+    return a
+
