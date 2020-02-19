@@ -69,7 +69,6 @@ def casi_ord_1(n:int) -> list:
 		print('La lista debe tener al menos 32 elementos')
 	else: 
 		a = ordenado(n)
-		print(a)
 		for i in range(0,n-8):
 			a[i], a[i+8] = a[i+8], a[i]
 
