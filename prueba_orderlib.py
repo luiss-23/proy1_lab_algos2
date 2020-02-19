@@ -283,3 +283,5 @@ if __name__ == "__main__":
 		gp.dibujar_grafica(ele, pr_quw3, "QuickSort-with-3-way-Partitioning")
 		gp.dibujar_grafica(ele, pr_dual, "Dual-Pivot-QuickSort")
 		gp.dibujar_grafica(ele, pr_tim, "TimSort")
+
+		gp.mostrar_grafico("Número de elementos", "Tiempo (seg)")
