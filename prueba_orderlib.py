@@ -7,7 +7,7 @@ de ordenamiento implementados en orderlib.py
 Autores: Luis Carlos Blanco, 17-10066
          Gabriel Chaurio, 17-10126
 
-Ultima modificacion: 18/02/2020
+Ultima modificacion: 19/02/2020
 """
 import random, argparse, time, matplotlib, statistics, sys
 from orderlib import *
@@ -15,7 +15,8 @@ import numpy as np
 import graficar_puntos as gp
 sys.setrecursionlimit(10000000)
 
-
+#Crea una secuencia de numeros entre el 0 y el 1
+#n: cantidad de elementos de la secuencia
 def punto_flotante(n:int) -> list:
 	a = []
 
@@ -24,7 +25,9 @@ def punto_flotante(n:int) -> list:
 
 	return a 
 
-
+#Crea una secuencia de numeros enteros entre 0 y la cantidad de elementos de la secuencia,
+#los cuales estan ordenados ascendentemente
+#n: cantidad de elementos de la secuencia 
 def ordenado(n:int) -> list:
 	a = []
 
@@ -35,6 +38,9 @@ def ordenado(n:int) -> list:
 
 	return a 
 
+#Crea una secuencia de numeros enteros entre 0 y la cantidad de elementos de la secuencia,
+#los cuales estan ordenados inversamente
+#n: cantidad de elementos de la secuencia 
 def orden_inverso(n:int) -> list:
 	a = []
 
@@ -45,6 +51,8 @@ def orden_inverso(n:int) -> list:
 
 	return a
 
+#Crea una secuencia de numeros que solamente contiene ceros y unos 
+#n: cantidad de elementos de la secuencia 
 def cero_uno(n:int) -> list:
 	a = [] 
 
@@ -53,6 +61,10 @@ def cero_uno(n:int) -> list:
 
 	return a 
 
+#Crea una secuencia de numeros enteros entre 0 y la cantidad de elementos de la secuencia
+#desde el primer elemento hasta la mitad de la secuancia, de la mitad hasta el final es un
+#reflejo de la primera mitad 
+#n: cantidad de elementos de la secuencia 
 def mitad(n:int) -> list:
 	a = []
 
@@ -64,9 +76,12 @@ def mitad(n:int) -> list:
 
 	return a 
 
+#Crea una secuencia de numeros enteros entre 0 y la cantidad de elementos de la secuencia,
+#en la cual se tomaran 16 pares que se intercambiaran con el elemento que lo separa a 8 casillas
+#n: cantidad de elementos de la secuencia 
 def casi_ord_1(n:int) -> list:
 	if(n < 8):
-		print('La lista debe tener al menos 32 elementos')
+		print('La lista debe tener al menos 8 elementos')
 	else: 
 		a = ordenado(n)
 		for i in range(0,n-8):
@@ -74,9 +89,12 @@ def casi_ord_1(n:int) -> list:
 
 	return a
 
+#Crea una secuencia de numeros enteros entre 0 y la cantidad de elementos de la secuencia,
+#en la cual se toman n/4 los cuales se intercambiaran con el elemento que lo separa a 4 casillas
+#n: cantidad de elementos de la secuencia 
 def casi_ord_2(n:int) -> list:
 	if(n < 4):
-		print('La lista debe tener al menos 32 elementos')
+		print('La lista debe tener al menos 4 elementos')
 	else: 
 		a = ordenado(n)
 
@@ -111,6 +129,8 @@ def type_arr(r,k:int) -> [int]:
 
 #Medicion de los tiempos
 #a: arreglo que va a ser ordenado
+#mer,quit,qui,med,intr,quw3,dual,tim: arreglos en los que se almacenara el tiempo
+#de corrida de cada algoritmo de ordenamiento
 def estudio_tiempo(a,mer,quit,qui,med,intr,quw3,dual,tim:list) -> [int]:
 
 
@@ -119,6 +139,7 @@ def estudio_tiempo(a,mer,quit,qui,med,intr,quw3,dual,tim:list) -> [int]:
 	ti1 = time.perf_counter()
 	mergesort(cop_arr)
 	tf1 = time.perf_counter() - ti1
+	assert(cop_arr[k-1] <= cop_arr[k] for k in range(1,len(cop_arr)))
 	mer.append(tf1)
 
 	cop_arr = a[:]
@@ -126,6 +147,7 @@ def estudio_tiempo(a,mer,quit,qui,med,intr,quw3,dual,tim:list) -> [int]:
 	ti2 = time.perf_counter()
 	quicksort_it(cop_arr)
 	tf2 = time.perf_counter() - ti2
+	assert(cop_arr[k-1] <= cop_arr[k] for k in range(1,len(cop_arr)))
 	quit.append(tf2)
 
 	cop_arr = a[:]
@@ -133,6 +155,7 @@ def estudio_tiempo(a,mer,quit,qui,med,intr,quw3,dual,tim:list) -> [int]:
 	ti3 = time.perf_counter()
 	quicksort(cop_arr,0,len(cop_arr)-1)
 	tf3 = time.perf_counter() - ti3
+	assert(cop_arr[k-1] <= cop_arr[k] for k in range(1,len(cop_arr)))
 	qui.append(tf3)
 
 	cop_arr = a[:]
@@ -140,6 +163,7 @@ def estudio_tiempo(a,mer,quit,qui,med,intr,quw3,dual,tim:list) -> [int]:
 	ti4 = time.perf_counter()
 	median_of_3_quicksort(cop_arr,0,len(cop_arr))
 	tf4 = time.perf_counter() - ti4
+	assert(cop_arr[k-1] <= cop_arr[k] for k in range(1,len(cop_arr)))
 	med.append(tf4)
 
 	cop_arr = a[:]
@@ -147,6 +171,7 @@ def estudio_tiempo(a,mer,quit,qui,med,intr,quw3,dual,tim:list) -> [int]:
 	ti5 = time.perf_counter()
 	introsort(cop_arr,0,len(cop_arr))
 	tf5 = time.perf_counter() - ti5
+	assert(cop_arr[k-1] <= cop_arr[k] for k in range(1,len(cop_arr)))
 	intr.append(tf5)
 
 	cop_arr = a[:]
@@ -154,6 +179,7 @@ def estudio_tiempo(a,mer,quit,qui,med,intr,quw3,dual,tim:list) -> [int]:
 	ti6 = time.perf_counter()
 	quicksort_w_3_way_partitioning(cop_arr,0,len(cop_arr)-1)
 	tf6 = time.perf_counter() - ti6
+	assert(cop_arr[k-1] <= cop_arr[k] for k in range(1,len(cop_arr)))
 	quw3.append(tf6)
 
 	cop_arr = a[:]
@@ -161,6 +187,7 @@ def estudio_tiempo(a,mer,quit,qui,med,intr,quw3,dual,tim:list) -> [int]:
 	ti7 = time.perf_counter()
 	dual_pivot_quicksort(cop_arr,0,len(cop_arr)-1)
 	tf7 = time.perf_counter() - ti7
+	assert(cop_arr[k-1] <= cop_arr[k] for k in range(1,len(cop_arr)))
 	dual.append(tf7)
 
 	cop_arr = a[:]
@@ -168,6 +195,7 @@ def estudio_tiempo(a,mer,quit,qui,med,intr,quw3,dual,tim:list) -> [int]:
 	ti8 = time.perf_counter()
 	timsort(cop_arr)
 	tf8 = time.perf_counter() - ti8
+	assert(cop_arr[k-1] <= cop_arr[k] for k in range(1,len(cop_arr)))
 	tim.append(tf8)
 
 	return mer, quit, qui, med, intr, quw3, dual, tim
@@ -183,6 +211,7 @@ if __name__ == "__main__":
 	ele = []
 	ele.extend(arg.input)
 
+	#Conversion de strings a enteros de los tamanos de secuencias dados por el usuario
 	for i in range(0,len(ele)):
 		ele[i] = int(ele[i])
 
@@ -212,6 +241,7 @@ if __name__ == "__main__":
 	pr_dual = []
 	pr_tim = []
 
+	#Ciclo para realizar las pruebas de ordenamiento de las secuencias, para todos los tamanos ingresados por el usuario 
 	for k in range(0,len(ele)):
 		print('Cantidad de elementos = ' +str(ele[k]) +'\n')
 		#Arreglos para almacenar el tiempo
@@ -269,6 +299,7 @@ if __name__ == "__main__":
 		des_tim = statistics.stdev(tims)
 		print('El promedio para el algoritmo TimSort es: ' +str(round(prom_tim,2)) +' segundos, con: ' +str(round(des_tim,2)) +' de STD' +'\n')
 
+	#Condicion para dibujar la grafica de tiempos con los tamanos de secuencias
 	if (g == True and len(ele) < 2):
 		print('Deben haber al menos dos tamanos de secuencia')
 		sys.exit()
