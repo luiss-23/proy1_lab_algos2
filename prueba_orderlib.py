@@ -1,7 +1,7 @@
 """
-orderlib.py
+prueba_orderlib.py
 
-Descripcion: Este programa buscara el timepo promedio de ejecucion de los algoritmos 
+Descripcion: Este programa buscara el tiempo promedio de ejecucion de los algoritmos 
 de ordenamiento implementados en orderlib.py
 
 Autores: Luis Carlos Blanco, 17-10066
