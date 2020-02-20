@@ -41,7 +41,7 @@ def orden_inverso(n:int) -> list:
 	for i in range(n):
 		a.append(random.randint(0,n))
 
-	list.reverse(a)
+	a = sorted(a,reverse=True)
 
 	return a
 
